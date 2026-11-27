@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planner tests</title>
+  <style>
+    body { font: 15px/1.5 system-ui, sans-serif; max-width: 760px; margin: 32px auto; padding: 0 16px; color: #1f2a33; }
+    h1 { font-size: 22px; }
+    #summary { font-weight: 700; padding: 10px 14px; border-radius: 10px; }
+    #summary.pass { background: #e3f1ea; color: #2f7a5b; }
+    #summary.fail { background: #fdecea; color: #a12b1f; }
+    li { margin: 4px 0; }
+    .ok::marker { content: '✓  '; color: #2f7a5b; }
+    .fail::marker { content: '✗  '; color: #c0392b; }
+    .err { display: block; color: #a12b1f; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>HomeMealPlanner · selection logic tests</h1>
+  <p id="summary">Running…</p>
+  <ul id="results"></ul>
+  <script src="../js/planner.js"></script>
+  <script src="planner.test.js"></script>
+  <script>
+    fetch('../data/recipes.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) { PlannerTests.realDataTests(data); })
+      .catch(function (e) { console.warn('Real data tests skipped:', e.message); })
+      .then(function () {
+        var rep = PlannerTests.report();
+        var s = document.getElementById('summary');
+        s.textContent = rep.passed + ' passed, ' + rep.failed + ' failed';
+        s.className = rep.failed ? 'fail' : 'pass';
+        document.getElementById('results').innerHTML = rep.results.map(function (r) {
+          return '<li class="' + (r.ok ? 'ok' : 'fail') + '">' + r.name + (r.ok ? '' : '<span class="err">' + r.error + '</span>') + '</li>';
+        }).join('');
+        document.title = (rep.failed ? 'FAIL' : 'PASS') + ' · Planner tests';
+      });
+  </script>
+</body>
+</html>

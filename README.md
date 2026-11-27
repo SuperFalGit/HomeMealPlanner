@@ -2,23 +2,93 @@
 
 Use Claude to cut down the time spent on the weekly meal plan and shopping list.
 
+A small web app (plain HTML/CSS/JS, no build step) that picks the week's **evening meals**
+from the recipe pool and prints a **double-sided A4 planner** for the fridge:
+
+- **Page 1** – the Weekly Planner (Mon–Sun on the left, every ingredient for the chosen meals on the right).
+- **Page 2** – Day to Day Essentials (Sugar, Milk, Eggs, Toilet Paper, Bleach, Toothpaste, Tea Bags,
+  Coffee, Protein Bars, Bin Bags) with tick boxes to cross off with a pen, plus a Notes column.
+
+## Run it
+The app runs in your web browser, served by a small local web server that comes with Python.
+
+1. **Open a terminal in this folder.** In VS Code use **Terminal → New Terminal** (or press
+   <kbd>Ctrl</kbd>+<kbd>&#96;</kbd>). It opens in the `HomeMealPlanner` folder.
+2. **Start the server:**
+   ```bash
+   python -m http.server 8000
+   ```
+   You'll see `Serving HTTP on ... port 8000`. Leave this terminal open while you use the app.
+3. **Open the app** at <http://localhost:8000> in Chrome or Edge.
+4. Click **Start this week's plan**.
+
+To stop the server, click in the terminal and press <kbd>Ctrl</kbd>+<kbd>C</kbd>. Run the same
+command next time.
+
+**Troubleshooting**
+- **Double-clicking `index.html` doesn't work.** The browser blocks the app from loading
+  `data/recipes.json` from a file, so always go through `http://localhost:8000`.
+- **"Address already in use"** means port 8000 is busy. Use another number, e.g.
+  `python -m http.server 8080`, then open <http://localhost:8080>.
+- **`python` not found?** Install Python from <https://www.python.org/downloads/> and tick
+  *Add Python to PATH* during setup.
+
+It also works as-is on GitHub Pages (no server needed), which is the easiest way to use it on a phone.
+Your plan, ticks and added recipes are saved per browser, so a phone and a PC keep separate copies.
+
+## Using it
+1. **Start this week's plan.** Choose how many evening meals and which nights. Hit **Create my plan**, or
+   open **Preferences** first to pick the recipe pool (All / Chefs / Type2 / a mix), chefs, must-haves
+   ("at least 1 chicken"), things to leave out, and whether to avoid recently used meals.
+   If the pool can't meet a request, the app says exactly why and offers to include used meals or reset
+   history. It never quietly bends a rule.
+2. **Review.** Each night has **Swap** (re-roll that night), **Lock**, and a dropdown to pick a specific
+   recipe. **Re-roll unlocked** re-picks every night that isn't locked. Nights can be added or removed.
+3. **Confirm week.** This marks the meals as used, so they aren't picked again until you reset history.
+4. **Print planner.** Print double-sided, *flip on long edge*, and turn on **Background graphics** in the
+   print dialog for the colours. **Ink saver** prints on a white background. The ingredients column
+   shrinks automatically (switching to two columns if needed) to fit the page.
+   **Recipe cards** prints a full card per meal (ingredients, method, Eat/Limit box for Type2).
+5. **Shopping** tab. A phone-friendly checklist of every ingredient by meal, plus the essentials and an
+   extras box. Ticks are saved on the device.
+
+## Adding recipes
+- **In the app:** drag `.txt` files onto the page (or use the drop zone on the **Recipes** tab). You
+  check the details (title, chef, protein, tags, ingredients, method) and add it to the pool. Added
+  recipes are saved in the browser. To make them permanent, click **Export recipes.json**,
+  replace `data/recipes.json` with the download, run `python scripts/build_recipe_md.py`, and commit.
+- **From the command line:**
+  ```bash
+  python scripts/add_recipe.py "Jamie - Miso Salmon.txt"          # preview the JSON
+  python scripts/add_recipe.py "Jamie - Miso Salmon.txt" --write  # add to recipes.json + regenerate recipes/*.md
+  ```
+
+Text format: name the file `Chef - Recipe Title.txt` (or `Ginos Recipe Title.txt` for a chef already
+in the pool). Put ingredients first, one per line. A line like `For the sauce:` starts a sub-section.
+Then add an optional numbered method (`1. …`). Optional lines: `Serves 4`, `Prep 10 mins`, `Cook 25 mins`,
+and `Eat: …` / `Limit: …` for Type2 recipes.
+
+## History
+Used meals live in the browser (`localStorage`), seeded from `data/history.json` on first run. On the
+**History** tab, **Export** downloads `history.json`. Commit it to `data/` to keep it in the repo.
+**Import** loads one back.
+
 ## What's here
 | Path | What it is |
 |---|---|
-| `data/recipes.json` | All 26 recipes in structured form — the app's data source |
-| `recipes/` | Readable Markdown copy of each recipe |
-| `data/history.json` | Meals already used (so they aren't picked again) |
+| `index.html`, `css/`, `js/` | The app. `js/planner.js` is the pure selection logic; `js/app.js` is the UI; `js/sheets.js` renders the printable pages |
+| `data/recipes.json` | All recipes in structured form (source of truth) |
+| `recipes/` | Readable Markdown copy of each recipe (generated by `scripts/build_recipe_md.py`) |
+| `data/history.json` | Meals already used |
+| `scripts/` | `add_recipe.py` (.txt → JSON) and `build_recipe_md.py` (JSON → Markdown) |
+| `tests/` | Selection-logic tests: open <http://localhost:8000/tests/> or run `node tests/planner.test.js` |
 | `docs/weekly-planner-paper.jpg` | The paper fridge planner the printed plan mirrors |
-| `CLAUDE.md` | The build brief Claude Code reads automatically |
 
-## Building the app with Claude Code (VS Code)
-1. Clone this repo and open the folder in VS Code.
-2. Open Claude Code and say: **"Build the app described in CLAUDE.md."**
-3. Run it locally: `python -m http.server 8000` then open http://localhost:8000
+Add `?demo` to the URL (e.g. `/?demo=7&seed=3`) to preview a throwaway plan without touching saved data.
 
 ## Recipe pool
 - **Chefs:** Gino D'Acampo, Hairy Bikers, Jamie Oliver, Nigella Lawson, Yinka, Navi, Iain
 - **Type2:** 5 recipes with Eat/Limit guidance
 
-Several recipes only have ingredient lists (no method). A few lines are marked `CHECK:`
-where the original text was unclear — worth a quick look.
+Several recipes only have ingredient lists (no method). A few lines are marked `CHECK:` where the
+original text was unclear. They're highlighted in the app and worth a quick look.

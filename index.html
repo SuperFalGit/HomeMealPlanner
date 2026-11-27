@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f2a33">
+  <title>HomeMeal · Weekly Kitchen Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/sheets.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f2a33'/%3E%3Cpath d='M7 19h18M9 19a7 7 0 0 1 14 0M16 11v-2M8 23h16' stroke='%23f2a46b' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+  <!-- Icon + fruit sprite -->
+  <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="i-logo" viewBox="0 0 24 24"><path d="M3 15h18"/><path d="M5 15a7 7 0 0 1 14 0"/><path d="M12 8V6"/><path d="M4 19h16"/></symbol>
+      <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="m15 15 6 6"/><path d="m4 4 5 5"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+      <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.6-1.8"/></symbol>
+      <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V3"/><path d="m7 8 5-5 5 5"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="m6 7 1 13h10l1-13"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+      <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+      <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L21.5 7H6"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21a2 2 0 0 1 2-2h13v2"/><path d="M9 7h6"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+      <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17v4M17 19h4"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 4 2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14a6 6 0 0 1 3.5 6"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+      <symbol id="i-hat" viewBox="0 0 24 24"><path d="M6 14a4 4 0 0 1-.8-7.9A5 5 0 0 1 12 3a5 5 0 0 1 6.8 3.1A4 4 0 0 1 18 14"/><path d="M6 14v6h12v-6"/><path d="M6 17h12"/></symbol>
+
+      <!-- Fruit illustrations for the printed planner -->
+      <symbol id="f-orange" viewBox="0 0 100 56">
+        <path d="M3 4a47 47 0 0 0 94 0z" fill="#f4a3a8"/>
+        <path d="M6 4a44 44 0 0 0 88 0z" fill="#f08a2c"/>
+        <path d="M11 4a39 39 0 0 0 78 0z" fill="#fde8c6"/>
+        <path d="M15 4a35 35 0 0 0 70 0z" fill="#f6a640"/>
+        <g stroke="#fde8c6" stroke-width="2.6" stroke-linecap="round">
+          <path d="M50 4 78.3 24.6M50 4l10.8 33.3M50 4 39.2 37.3M50 4 21.7 24.6"/>
+        </g>
+        <circle cx="50" cy="5" r="3.2" fill="#fde8c6"/>
+      </symbol>
+      <symbol id="f-apple" viewBox="0 0 100 112">
+        <path d="M58 18c4-9 12-13 22-12-3 9-10 13-22 12z" fill="#3f8a55"/>
+        <path d="M50 26 52 6" stroke="#5b3a2a" stroke-width="4" stroke-linecap="round"/>
+        <path d="M50 26C36 12 6 16 6 50c0 32 22 58 44 50 22 8 44-18 44-50 0-34-30-38-44-24z" fill="#e5514e"/>
+        <path d="M50 32C38 20 13 24 13 52c0 27 19 49 37 42 18 7 37-15 37-42 0-28-25-32-37-20z" fill="#f6bfc2"/>
+        <path d="M50 37C40 27 19 30 19 54c0 23 16 41 31 35 15 6 31-12 31-35 0-24-21-27-31-17z" fill="#fff3df"/>
+        <path d="M50 36c-6 8-9 18-9 27s3 16 9 20c6-4 9-11 9-20s-3-19-9-27z" fill="#f3b24c"/>
+        <path d="M50 30v62" stroke="#3f8a55" stroke-width="2"/>
+        <ellipse cx="46" cy="60" rx="2.6" ry="4.2" fill="#4a2b1d"/>
+        <ellipse cx="54" cy="60" rx="2.6" ry="4.2" fill="#4a2b1d"/>
+      </symbol>
+      <symbol id="f-melon" viewBox="0 0 100 56">
+        <path d="M2 4a48 48 0 0 0 96 0z" fill="#2e7a4e"/>
+        <path d="M7 4a43 43 0 0 0 86 0z" fill="#d6edc9"/>
+        <path d="M11 4a39 39 0 0 0 78 0z" fill="#ef6b5f"/>
+        <g fill="#2b2320">
+          <ellipse cx="34" cy="16" rx="2" ry="3.2"/><ellipse cx="50" cy="22" rx="2" ry="3.2"/>
+          <ellipse cx="66" cy="16" rx="2" ry="3.2"/><ellipse cx="42" cy="31" rx="2" ry="3.2"/>
+          <ellipse cx="58" cy="31" rx="2" ry="3.2"/><ellipse cx="25" cy="10" rx="2" ry="3.2"/>
+          <ellipse cx="75" cy="10" rx="2" ry="3.2"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="appbar">
+    <div class="appbar-inner">
+      <a class="brand" href="#week" aria-label="HomeMeal home">
+        <span class="brand-mark"><svg class="ic"><use href="#i-logo"/></svg></span>
+        <span class="brand-text"><b>Home</b>Meal<small>Weekly Kitchen Planner</small></span>
+      </a>
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button class="tab is-active" role="tab" data-tab="week" aria-selected="true"><svg class="ic"><use href="#i-calendar"/></svg><span>This week</span></button>
+        <button class="tab" role="tab" data-tab="shop" aria-selected="false"><svg class="ic"><use href="#i-cart"/></svg><span>Shopping</span><em class="tab-badge" id="shopBadge" hidden></em></button>
+        <button class="tab" role="tab" data-tab="recipes" aria-selected="false"><svg class="ic"><use href="#i-book"/></svg><span>Recipes</span></button>
+        <button class="tab" role="tab" data-tab="history" aria-selected="false"><svg class="ic"><use href="#i-history"/></svg><span>History</span></button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ THIS WEEK ============ -->
+    <section class="panel" id="tab-week" data-panel="week">
+      <div class="hero" id="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Evening meals, sorted</p>
+          <h1>Plan the week in under a minute.</h1>
+          <p class="lede">Choose how many dinners and which nights. We'll pick from your recipe collection, list every ingredient, and print a double-sided planner for the fridge.</p>
+          <button class="btn btn-primary btn-xl" id="startBtn" type="button">
+            <svg class="ic"><use href="#i-sparkle"/></svg> Start this week's plan
+          </button>
+          <p class="hero-meta" id="heroMeta"></p>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="mini-sheet">
+            <svg class="mini-fruit f1"><use href="#f-orange"/></svg>
+            <svg class="mini-fruit f2"><use href="#f-apple"/></svg>
+            <svg class="mini-fruit f3"><use href="#f-melon"/></svg>
+            <div class="mini-title">Weekly Planner</div>
+            <div class="mini-cols"><div class="mini-days"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="mini-notes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="weekView" hidden>
+        <div class="week-head">
+          <div>
+            <p class="eyebrow" id="weekLabel">Week of</p>
+            <h2 class="h-display">Your evening meals</h2>
+            <div class="status-row"><span class="pill" id="planStatus"></span><span class="muted small" id="planSummary"></span></div>
+          </div>
+          <div class="week-actions">
+            <button class="btn btn-ghost" id="newPlanBtn" type="button"><svg class="ic"><use href="#i-sparkle"/></svg>New plan</button>
+            <button class="btn btn-ghost" id="rerollBtn" type="button"><svg class="ic"><use href="#i-shuffle"/></svg>Re-roll unlocked</button>
+            <button class="btn btn-accent" id="confirmBtn" type="button"><svg class="ic"><use href="#i-check"/></svg>Confirm week</button>
+          </div>
+        </div>
+
+        <ol class="day-list" id="dayList"></ol>
+
+        <div class="print-panel">
+          <div class="print-panel-head">
+            <div>
+              <h3>Print</h3>
+              <p class="muted small">A4, double-sided (flip on long edge). Turn on <b>Background graphics</b> in the print dialog for the colours.</p>
+            </div>
+            <div class="print-actions">
+              <label class="switch"><input type="checkbox" id="inkSaver"><span></span>Ink saver</label>
+              <button class="btn btn-ghost" id="printCardsBtn" type="button"><svg class="ic"><use href="#i-book"/></svg>Recipe cards</button>
+              <button class="btn btn-primary" id="printPlannerBtn" type="button"><svg class="ic"><use href="#i-print"/></svg>Print planner</button>
+            </div>
+          </div>
+          <p class="fit-warning" id="fitWarning" hidden></p>
+          <div class="preview-strip" id="previewStrip"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SHOPPING ============ -->
+    <section class="panel" id="tab-shop" data-panel="shop" hidden>
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">For the weekly shop</p>
+          <h2 class="h-display">Shopping list</h2>
+          <p class="muted small" id="shopSummary"></p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-ghost" id="clearTicksBtn" type="button"><svg class="ic"><use href="#i-x"/></svg>Clear ticks</button>
+          <button class="btn btn-primary" id="printShopBtn" type="button"><svg class="ic"><use href="#i-print"/></svg>Print list</button>
+        </div>
+      </div>
+      <div id="shopEmpty" class="empty" hidden>
+        <svg class="ic ic-xl"><use href="#i-cart"/></svg>
+        <p>No meals planned yet.</p>
+        <button class="btn btn-primary" type="button" data-action="start">Start this week's plan</button>
+      </div>
+      <div class="shop-grid" id="shopList"></div>
+      <div class="card extras">
+        <label for="extras"><b>Extras</b> <span class="muted small">— anything else for this shop</span></label>
+        <textarea id="extras" rows="4" placeholder="e.g. birthday card, dishwasher tablets…"></textarea>
+      </div>
+    </section>
+
+    <!-- ============ RECIPES ============ -->
+    <section class="panel" id="tab-recipes" data-panel="recipes" hidden>
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Your collection</p>
+          <h2 class="h-display">Recipe pool</h2>
+          <p class="muted small" id="recipeCount"></p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-ghost" id="exportRecipesBtn" type="button"><svg class="ic"><use href="#i-download"/></svg>Export recipes.json</button>
+        </div>
+      </div>
+
+      <label class="dropzone" id="dropzone" tabindex="0">
+        <input type="file" id="txtInput" accept=".txt,text/plain" multiple hidden>
+        <span class="dz-icon"><svg class="ic"><use href="#i-upload"/></svg></span>
+        <span class="dz-text"><b>Drop recipe .txt files here</b><span>or click to browse. Ingredients first, then an optional numbered method. Name files like <code>Chef - Recipe Title.txt</code>.</span></span>
+      </label>
+
+      <div class="filter-bar">
+        <div class="search"><svg class="ic"><use href="#i-search"/></svg><input type="search" id="recipeSearch" placeholder="Search recipes or ingredients"></div>
+        <div class="seg" id="recipeFilter" role="radiogroup" aria-label="Filter recipes">
+          <button type="button" data-filter="all" class="is-on">All</button>
+          <button type="button" data-filter="Chefs">Chefs</button>
+          <button type="button" data-filter="Type2">Type2</button>
+          <button type="button" data-filter="custom">Added</button>
+        </div>
+      </div>
+      <div class="recipe-grid" id="recipeGrid"></div>
+    </section>
+
+    <!-- ============ HISTORY ============ -->
+    <section class="panel" id="tab-history" data-panel="history" hidden>
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">So you don't eat the same thing twice</p>
+          <h2 class="h-display">Meal history</h2>
+          <p class="muted small" id="historySummary"></p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-ghost" id="importHistoryBtn" type="button"><svg class="ic"><use href="#i-upload"/></svg>Import</button>
+          <input type="file" id="historyInput" accept=".json,application/json" hidden>
+          <button class="btn btn-ghost" id="exportHistoryBtn" type="button"><svg class="ic"><use href="#i-download"/></svg>Export</button>
+          <button class="btn btn-danger" id="resetHistoryBtn" type="button"><svg class="ic"><use href="#i-trash"/></svg>Reset</button>
+        </div>
+      </div>
+      <p class="muted small">Confirmed meals are left out of random picks until you reset. Export downloads <code>history.json</code> — commit it to <code>data/</code> to keep it in the repo.</p>
+      <ul class="history-list" id="historyList"></ul>
+    </section>
+  </main>
+
+  <!-- ============ WIZARD ============ -->
+  <dialog class="sheet-dialog" id="wizard" aria-labelledby="wizTitle">
+    <form method="dialog" class="wizard" id="wizardForm">
+      <header class="wiz-head">
+        <div class="wiz-progress"><span id="wizBar"></span></div>
+        <div class="wiz-title-row">
+          <div>
+            <p class="eyebrow" id="wizStep">Step 1 of 2</p>
+            <h2 id="wizTitle">How many evening meals?</h2>
+          </div>
+          <button class="icon-btn" type="button" data-close aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button>
+        </div>
+      </header>
+
+      <div class="wiz-body">
+        <!-- Step 1 -->
+        <div class="wiz-step" data-step="1">
+          <div class="stepper big" aria-label="Number of meals">
+            <button type="button" class="icon-btn round" id="mealsMinus" aria-label="Fewer meals"><svg class="ic"><use href="#i-minus"/></svg></button>
+            <output id="mealsOut">5</output>
+            <button type="button" class="icon-btn round" id="mealsPlus" aria-label="More meals"><svg class="ic"><use href="#i-plus"/></svg></button>
+          </div>
+          <p class="center muted" id="mealsHint">evening meals this week</p>
+
+          <h3 class="field-title">Which nights?</h3>
+          <div class="day-chips" id="dayChips"></div>
+
+          <div class="field-row">
+            <label class="field">
+              <span>Week starting</span>
+              <input type="date" id="weekStart">
+            </label>
+            <div class="field">
+              <span>Cooking for</span>
+              <div class="stepper small">
+                <button type="button" class="icon-btn round" id="servMinus" aria-label="Fewer people"><svg class="ic"><use href="#i-minus"/></svg></button>
+                <output id="servOut">2</output>
+                <button type="button" class="icon-btn round" id="servPlus" aria-label="More people"><svg class="ic"><use href="#i-plus"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="wiz-step" data-step="2" hidden>
+          <h3 class="field-title">Recipe pool</h3>
+          <div class="seg wide" id="poolSeg" role="radiogroup">
+            <button type="button" data-pool="all">All recipes</button>
+            <button type="button" data-pool="chefs">Chefs only</button>
+            <button type="button" data-pool="type2">Type2 only</button>
+            <button type="button" data-pool="mix">Mix</button>
+          </div>
+          <div class="mix-row" id="mixRow" hidden>
+            <span>Type2 meals in the mix</span>
+            <div class="stepper small">
+              <button type="button" class="icon-btn round" id="mixMinus" aria-label="Fewer Type2"><svg class="ic"><use href="#i-minus"/></svg></button>
+              <output id="mixOut">2</output>
+              <button type="button" class="icon-btn round" id="mixPlus" aria-label="More Type2"><svg class="ic"><use href="#i-plus"/></svg></button>
+            </div>
+          </div>
+
+          <div id="chefBlock">
+            <h3 class="field-title">Chefs to include</h3>
+            <div class="chips" id="chefChips"></div>
+          </div>
+
+          <h3 class="field-title">Must-haves <span class="muted small">— at least this many</span></h3>
+          <div class="must-grid" id="mustGrid"></div>
+
+          <h3 class="field-title">Leave out</h3>
+          <label class="switch block"><input type="checkbox" id="vegOnly"><span></span>Vegetarian meals only</label>
+          <div class="chips" id="excludeChips"></div>
+
+          <h3 class="field-title">History</h3>
+          <label class="switch block"><input type="checkbox" id="avoidRecent" checked><span></span>Avoid meals used in previous weeks <span class="muted small" id="usedCount"></span></label>
+
+          <p class="pool-count" id="poolCount"></p>
+        </div>
+      </div>
+
+      <div class="problems pinned" id="wizProblems" role="alert" hidden></div>
+
+      <footer class="wiz-foot">
+        <button type="button" class="btn btn-ghost" id="wizBack" hidden><svg class="ic"><use href="#i-left"/></svg>Back</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-ghost" id="wizQuick">Use these settings</button>
+        <button type="button" class="btn btn-primary" id="wizNext">Next<svg class="ic"><use href="#i-right"/></svg></button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- ============ PROBLEMS / CONFIRM ============ -->
+  <dialog class="sheet-dialog small" id="alertDialog">
+    <div class="alert-body">
+      <div class="alert-icon"><svg class="ic"><use href="#i-alert"/></svg></div>
+      <h3 id="alertTitle"></h3>
+      <div id="alertText"></div>
+      <div class="alert-actions" id="alertActions"></div>
+    </div>
+  </dialog>
+
+  <!-- ============ RECIPE VIEW ============ -->
+  <dialog class="sheet-dialog" id="recipeDialog">
+    <div class="recipe-view">
+      <button class="icon-btn close-float" type="button" data-close aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button>
+      <div id="recipeView"></div>
+    </div>
+  </dialog>
+
+  <!-- ============ IMPORT REVIEW ============ -->
+  <dialog class="sheet-dialog" id="importDialog" aria-labelledby="impTitle">
+    <form class="wizard" id="importForm" method="dialog">
+      <header class="wiz-head">
+        <div class="wiz-title-row">
+          <div>
+            <p class="eyebrow" id="impStep">New recipe</p>
+            <h2 id="impTitle">Check the details</h2>
+          </div>
+          <button class="icon-btn" type="button" data-close aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button>
+        </div>
+      </header>
+      <div class="wiz-body">
+        <div class="problems soft" id="impWarnings" hidden></div>
+        <div class="field-row">
+          <label class="field grow"><span>Title</span><input id="impTitleIn" required></label>
+          <label class="field"><span>Chef</span><input id="impChef" list="chefList" required></label>
+          <datalist id="chefList"></datalist>
+        </div>
+        <div class="field-row">
+          <label class="field"><span>Serves</span><input id="impServes" type="number" min="1" max="20"></label>
+          <label class="field"><span>Prep (mins)</span><input id="impPrep" type="number" min="0"></label>
+          <label class="field"><span>Cook (mins)</span><input id="impCook" type="number" min="0"></label>
+        </div>
+        <label class="switch block"><input type="checkbox" id="impType2"><span></span>Type2 recipe (with Eat / Limit guidance)</label>
+        <div class="field-row" id="impT2Row" hidden>
+          <label class="field grow"><span>Eat</span><input id="impEat"></label>
+          <label class="field grow"><span>Limit</span><input id="impLimit"></label>
+        </div>
+        <div class="field">
+          <span>Protein</span>
+          <div class="chips" id="impProtein"></div>
+        </div>
+        <label class="field"><span>Tags <em class="muted small">comma separated</em></span><input id="impTags"></label>
+        <label class="field"><span>Ingredients <em class="muted small">one per line · prefix with "Sauce:" etc. for a sub-section</em></span><textarea id="impIngredients" rows="9" required></textarea></label>
+        <label class="field"><span>Method <em class="muted small">one step per line (optional)</em></span><textarea id="impMethod" rows="6"></textarea></label>
+      </div>
+      <footer class="wiz-foot">
+        <button type="button" class="btn btn-ghost" id="impSkip">Skip this file</button>
+        <span class="spacer"></span>
+        <button type="submit" class="btn btn-primary" id="impSave"><svg class="ic"><use href="#i-plus"/></svg>Add to recipe pool</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div class="drop-overlay" id="dropOverlay" hidden>
+    <div><svg class="ic ic-xl"><use href="#i-upload"/></svg><p>Drop recipe .txt files to add them</p></div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Filled just before printing; the only thing visible on paper. -->
+  <div id="print-area" aria-hidden="true"></div>
+
+  <script src="js/planner.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/sheets.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
