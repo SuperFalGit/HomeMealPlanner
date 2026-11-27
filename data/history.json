@@ -1,0 +1,4 @@
+{
+  "notes": "Meals already used in past weekly plans. The app excludes these from random picks until the pool runs out or they are reset. Add ids from recipes.json.",
+  "used": []
+}
