@@ -1,0 +1,129 @@
+/* HomeMealPlanner - A4 sheets (planner, essentials, recipe cards, shopping list) and @media print. */
+
+.sheet {
+  --paper-blue: #b8c4e5;
+  --rule: #8e939d;
+  --sheet-ink: #2a2e37;
+  position: relative;
+  width: 210mm;
+  height: 296.5mm; /* a hair under A4 so rounding never spills onto an extra page */
+  overflow: hidden;
+  background: var(--paper-blue);
+  color: var(--sheet-ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.sheet-decor { position: absolute; inset: 0; pointer-events: none; }
+.sheet .fruit { position: absolute; overflow: visible; }
+.sheet .dot { position: absolute; width: 1.1mm; height: 1.1mm; border-radius: 50%; background: #fff; opacity: .85; }
+
+.sheet-head { position: absolute; left: 13mm; top: 6mm; right: 12mm; height: 46mm; }
+.sheet .script {
+  margin: 0; font-family: 'Dancing Script', 'Segoe Script', 'Brush Script MT', cursive; font-weight: 500;
+  color: #fff; font-size: 50pt; line-height: .9; letter-spacing: .01em;
+}
+.sheet-week {
+  position: absolute; left: 1mm; top: 39.5mm; margin: 0; color: #fff;
+  font-size: 7.5pt; letter-spacing: .16em; text-transform: uppercase; font-weight: 600;
+}
+.sheet-week b { margin-left: 2.5mm; letter-spacing: .02em; text-transform: none; font-weight: 600; font-size: 9pt; }
+
+.sheet-cols {
+  position: absolute; left: 10mm; right: 12mm; top: 54mm; bottom: 11mm;
+  display: grid; grid-template-columns: 44fr 56fr; gap: 7mm;
+}
+.paper { position: relative; background: #fff; box-shadow: 1.8mm 1.4mm 0 rgba(50, 54, 70, .78); overflow: hidden; min-height: 0; }
+
+/* Days column */
+.paper.days { display: grid; grid-template-rows: repeat(7, 1fr); padding: 0 6mm; }
+.day-row { border-bottom: .3mm solid var(--rule); padding: 3.4mm 0 2mm; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+.day-row:last-child { border-bottom: 0; }
+.day-name { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5pt; letter-spacing: .07em; }
+.day-date { font-size: 7pt; letter-spacing: .04em; color: #9aa0aa; }
+.day-meal {
+  margin-top: 2mm; padding-left: 2.4mm; border-left: 1mm solid var(--fc, #f08a2c);
+  font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 11.5pt; line-height: 1.16; color: #1f2a33;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.day-row:nth-child(3n+2) { --fc: #e5514e; }
+.day-row:nth-child(3n) { --fc: #2e7a4e; }
+.day-meta { margin-top: 1.2mm; padding-left: 3.4mm; font-size: 7.3pt; color: #6b7280; }
+.day-meta .t2 { background: #e3f1ea; color: #2f7a5b; border-radius: 1.5mm; padding: 0 1.4mm; font-weight: 600; }
+
+/* Ingredients / notes column */
+.paper.notes { display: flex; flex-direction: column; padding: 4.5mm 6mm 4mm; }
+.paper.notes h2 { margin: 0 0 3mm; font-weight: 400; font-size: 22pt; letter-spacing: .05em; line-height: 1.1; }
+.ing-body { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.ing-flow { flex: none; font-size: 9pt; line-height: 1.27; column-gap: 5mm; column-fill: balance; }
+.ruled {
+  flex: 1; min-height: 0;
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 7.2mm, var(--rule) 7.2mm, var(--rule) 7.5mm);
+}
+.ing-block { margin-bottom: .75em; }
+.ing-block h3 { display: flex; gap: .45em; align-items: baseline; margin: 0 0 .25em; font-size: 1.07em; font-weight: 700; line-height: 1.2; break-after: avoid; }
+.ing-day { flex: none; font-size: .74em; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: #c9d3ee; color: #1f2a33; border-radius: .25em; padding: .08em .45em; }
+.ing-block h4 { margin: .35em 0 .1em; font-size: .78em; letter-spacing: .09em; text-transform: uppercase; color: #b84a24; break-after: avoid; }
+.ing-block ul { list-style: none; margin: 0; padding: 0; }
+.ing-block li { position: relative; padding-left: 1.25em; break-inside: avoid; }
+.ing-block li::before { content: ''; position: absolute; left: .1em; top: .3em; width: .66em; height: .66em; border: .25mm solid var(--rule); border-radius: .12em; }
+.sheet .check-note { background: #fff5d6; }
+
+/* Essentials (page 2) */
+.paper.ess { padding: 4mm 7mm; }
+.ess-list { list-style: none; margin: 0; padding: 0; height: 100%; display: grid; grid-template-rows: repeat(10, 1fr); }
+.ess-list li { display: flex; align-items: center; gap: 4.5mm; border-bottom: .3mm solid var(--rule); }
+.ess-list li:last-child { border-bottom: 0; }
+.ess-list .box { flex: none; width: 7mm; height: 7mm; border: .5mm solid var(--sheet-ink); border-radius: 1.2mm; }
+.ess-name { font-size: 15pt; letter-spacing: .04em; }
+.ess-line { flex: 1; }
+
+/* Ink saver */
+.ink-saver .sheet { background: #fff; }
+.ink-saver .sheet .fruit.edge, .ink-saver .sheet .dot { display: none; }
+.ink-saver .sheet .script { color: #7b8dc2; }
+.ink-saver .sheet-week { color: #55607a; }
+.ink-saver .paper { box-shadow: none; border: .35mm solid var(--rule); }
+
+/* ---------- On-screen preview ---------- */
+.sheet-frame { margin: 0; }
+.sheet-scale {
+  position: relative; width: 100%; aspect-ratio: 210 / 296.5; overflow: hidden; border-radius: 6px;
+  background: #fff; box-shadow: 0 1px 2px rgba(31, 42, 51, .1), 0 14px 34px -14px rgba(31, 42, 51, .4);
+}
+.sheet-scale .sheet { position: absolute; top: 0; left: 0; transform-origin: 0 0; transform: scale(var(--k, .45)); }
+.sheet-frame figcaption { text-align: center; font-size: 12px; font-weight: 600; color: var(--muted, #6c7780); margin-top: 10px; letter-spacing: .04em; }
+
+/* Off-screen but laid out, so it can be measured before printing. */
+#print-area { position: fixed; left: -10000px; top: 0; visibility: hidden; pointer-events: none; }
+
+/* ---------- Recipe cards & shopping list (print) ---------- */
+.cards-print .rcard {
+  break-inside: avoid; page-break-inside: avoid; border: .3mm solid #cfcac1; border-radius: 3mm;
+  padding: 6mm 7mm; margin-bottom: 6mm; font-size: 10pt; color: #1f2a33;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.cards-print .rcard h2 { font-size: 18pt; }
+.cards-print .rc-ing li, .cards-print .rc-steps li { font-size: 9.5pt; }
+.cards-print .rc-ing li { padding: 1mm 0; }
+.cards-print .rc-steps li { margin-bottom: 1.6mm; }
+.cards-print .rc-body { grid-template-columns: 1fr 1.35fr; gap: 7mm; }
+
+.shop-print { font-family: 'Inter', system-ui, sans-serif; color: #1f2a33; font-size: 10pt; }
+.shop-print h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 22pt; margin: 0; }
+.sp-week { margin: 1mm 0 6mm; color: #6c7780; }
+.sp-cols { column-count: 2; column-gap: 9mm; }
+.sp-meal { break-inside: avoid; page-break-inside: avoid; margin-bottom: 5mm; }
+.sp-meal h3 { display: flex; gap: 2mm; align-items: baseline; font-size: 11pt; margin: 0 0 1.5mm; }
+.sp-meal h4 { font-size: 7.5pt; letter-spacing: .1em; text-transform: uppercase; color: #b84a24; margin: 2mm 0 .5mm; }
+.sp-meal ul { list-style: none; margin: 0; padding: 0; }
+.sp-meal li { display: flex; gap: 2.2mm; padding: .7mm 0; border-bottom: .2mm solid #e5e1da; }
+.shop-print .box { flex: none; width: 3.2mm; height: 3.2mm; border: .3mm solid #1f2a33; border-radius: .6mm; margin-top: .6mm; }
+
+@media print {
+  html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
+  body > *:not(#print-area):not(.sprite) { display: none !important; }
+  #print-area { position: static; left: auto; visibility: visible; }
+  #print-area .sheet { break-after: page; page-break-after: always; }
+  #print-area .sheet:last-child { break-after: auto; page-break-after: auto; }
+}
