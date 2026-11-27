@@ -136,11 +136,7 @@ main { max-width: 1180px; margin: 0 auto; padding: 28px 20px 120px; }
   border-radius: 10px; box-shadow: var(--shadow-lg); transform: rotate(3deg); padding: 18% 7% 7%; overflow: hidden;
 }
 .mini-title { position: absolute; top: 5%; left: 8%; font-family: 'Dancing Script', cursive; color: #fff; font-size: 34px; line-height: .9; width: 3em; }
-.mini-fruit { position: absolute; height: auto; aspect-ratio: 100 / 56; overflow: visible; }
-.mini-fruit.f2 { aspect-ratio: 100 / 112; }
-.mini-fruit.f1 { width: 22%; right: 26%; top: 4%; transform: rotate(200deg); }
-.mini-fruit.f2 { width: 16%; right: 8%; top: 9%; }
-.mini-fruit.f3 { width: 26%; right: -6%; bottom: 20%; transform: rotate(270deg); }
+.mini-sheet { background-image: radial-gradient(circle, rgba(255, 255, 255, .5) 1px, transparent 1.4px); background-size: 10px 10px; }
 .mini-cols { display: grid; grid-template-columns: 1fr 1.25fr; gap: 6%; height: 100%; }
 .mini-days, .mini-notes { background: #fff; border-radius: 2px; box-shadow: 4px 3px 0 rgba(40, 46, 66, .5); display: flex; flex-direction: column; justify-content: space-around; padding: 8% 10%; }
 .mini-days i, .mini-notes i { display: block; height: 2px; background: #d5d9e2; }

@@ -15,40 +15,8 @@
     return /CHECK:/.test(text) ? '<span class="check-note" title="Uncertain transcription">' + safe + '</span>' : safe;
   }
 
-  var FRUIT_RATIO = { orange: 0.56, melon: 0.56, apple: 1.12 };
-
-  function fruit(kind, x, y, w, rot, cls) {
-    var h = (w * FRUIT_RATIO[kind]).toFixed(1);
-    return '<svg class="fruit ' + (cls || '') + '" style="left:' + x + 'mm;top:' + y + 'mm;width:' + w + 'mm;height:' + h + 'mm;transform:rotate(' + rot + 'deg)" aria-hidden="true"><use href="#f-' + kind + '"/></svg>';
-  }
-
-  function dots(x, y) {
-    var out = '';
-    var pts = [[0, 0], [3, 1.5], [1.5, 4], [5, 4.5], [6.5, 0.5], [3.5, 7]];
-    pts.forEach(function (p) {
-      out += '<i class="dot" style="left:' + (x + p[0]) + 'mm;top:' + (y + p[1]) + 'mm"></i>';
-    });
-    return out;
-  }
-
-  /** Scattered fruit, echoing the paper planner on the fridge. */
-  function decor(variant) {
-    var header = variant === 'b'
-      ? fruit('apple', 118, 9, 22, -8) + fruit('orange', 146, 6, 26, 200) + fruit('melon', 176, 24, 30, 160) + fruit('orange', 104, 34, 18, 30)
-      : fruit('orange', 112, 11, 26, 205) + fruit('apple', 140, 20, 21, 4) + fruit('orange', 170, 9, 25, 160) + fruit('melon', 184, 29, 30, 200);
-    var edges =
-      fruit('orange', -9, 72, 22, 75, 'edge') +
-      fruit('melon', -12, 150, 26, 95, 'edge') +
-      fruit('apple', -7, 228, 17, 12, 'edge') +
-      fruit('melon', 197, 82, 26, 270, 'edge') +
-      fruit('apple', 199, 168, 16, -10, 'edge') +
-      fruit('orange', 196, 246, 22, 280, 'edge') +
-      fruit('melon', 30, 289, 26, 0, 'edge') +
-      fruit('orange', 92, 290, 20, 10, 'edge') +
-      fruit('apple', 150, 286, 15, 0, 'edge');
-    var spots = dots(96, 8) + dots(160, 40) + dots(188, 6) + dots(4, 40) + dots(200, 120) + dots(3, 196) + dots(120, 286) + dots(200, 214);
-    return '<div class="sheet-decor">' + header + edges + spots + '</div>';
-  }
+  // Total rows on the essentials page: the listed items, then blank lines to write more.
+  var ESSENTIAL_ROWS = 20;
 
   function formatWeek(weekStart) {
     if (!weekStart) return '';
@@ -101,7 +69,7 @@
           groupsHtml(P.groupIngredients(r.ingredients)) + '</div>';
       }
     }
-    return '<article class="sheet sheet-planner">' + decor('a') +
+    return '<article class="sheet sheet-planner">' +
       '<header class="sheet-head"><h1 class="script">Weekly<br>Planner</h1>' +
       '<p class="sheet-week">Evening meals<b>' + esc(plan.weekStart ? 'w/c ' + formatWeek(plan.weekStart) : '') + '</b></p></header>' +
       '<div class="sheet-cols">' +
@@ -116,14 +84,17 @@
   // ---------------------------------------------------------------------------
 
   function essentialsSheet(items) {
-    var list = (items || P.ESSENTIALS).map(function (name) {
-      return '<li><span class="box"></span><span class="ess-name">' + esc(name) + '</span><span class="ess-line"></span></li>';
-    }).join('');
-    return '<article class="sheet sheet-essentials">' + decor('b') +
+    items = items || P.ESSENTIALS;
+    var rows = Math.max(ESSENTIAL_ROWS, items.length + 4);
+    var list = '';
+    for (var i = 0; i < rows; i++) {
+      list += i < items.length ? '<li>' + esc(items[i]) + '</li>' : '<li class="blank"></li>';
+    }
+    return '<article class="sheet sheet-essentials">' +
       '<header class="sheet-head"><h1 class="script">Day to Day<br>Essentials</h1>' +
       '<p class="sheet-week">Cross off as you go<b>Weekly shop</b></p></header>' +
       '<div class="sheet-cols">' +
-      '<section class="paper ess"><ul class="ess-list">' + list + '</ul></section>' +
+      '<section class="paper ess"><ul class="ess-list" style="grid-template-rows:repeat(' + rows + ',1fr)">' + list + '</ul></section>' +
       '<section class="paper notes"><h2>Notes</h2><div class="ing-body"><div class="ruled"></div></div></section>' +
       '</div></article>';
   }

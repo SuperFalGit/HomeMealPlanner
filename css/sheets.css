@@ -8,15 +8,16 @@
   width: 210mm;
   height: 296.5mm; /* a hair under A4 so rounding never spills onto an extra page */
   overflow: hidden;
-  background: var(--paper-blue);
+  /* Plain, subtle white polka dots on the planner blue. */
+  background-color: var(--paper-blue);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, .5) .55mm, transparent .65mm);
+  background-size: 7mm 7mm;
+  background-position: 3.5mm 0; /* keeps a dot row clear of the small header text */
   color: var(--sheet-ink);
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
-.sheet-decor { position: absolute; inset: 0; pointer-events: none; }
-.sheet .fruit { position: absolute; overflow: visible; }
-.sheet .dot { position: absolute; width: 1.1mm; height: 1.1mm; border-radius: 50%; background: #fff; opacity: .85; }
 
 .sheet-head { position: absolute; left: 13mm; top: 6mm; right: 12mm; height: 46mm; }
 .sheet .script {
@@ -71,16 +72,11 @@
 
 /* Essentials (page 2) */
 .paper.ess { padding: 4mm 7mm; }
-.ess-list { list-style: none; margin: 0; padding: 0; height: 100%; display: grid; grid-template-rows: repeat(10, 1fr); }
-.ess-list li { display: flex; align-items: center; gap: 4.5mm; border-bottom: .3mm solid var(--rule); }
-.ess-list li:last-child { border-bottom: 0; }
-.ess-list .box { flex: none; width: 7mm; height: 7mm; border: .5mm solid var(--sheet-ink); border-radius: 1.2mm; }
-.ess-name { font-size: 15pt; letter-spacing: .04em; }
-.ess-line { flex: 1; }
+.ess-list { list-style: none; margin: 0; padding: 0; height: 100%; display: grid; }
+.ess-list li { display: flex; align-items: flex-end; padding: 0 1mm 1.6mm; border-bottom: .3mm solid var(--rule); font-size: 12.5pt; letter-spacing: .04em; }
 
 /* Ink saver */
 .ink-saver .sheet { background: #fff; }
-.ink-saver .sheet .fruit.edge, .ink-saver .sheet .dot { display: none; }
 .ink-saver .sheet .script { color: #7b8dc2; }
 .ink-saver .sheet-week { color: #55607a; }
 .ink-saver .paper { box-shadow: none; border: .35mm solid var(--rule); }
